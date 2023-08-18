@@ -65,16 +65,21 @@ function reducer(state, { type, payload }) {
         amountToEdit: payload.oldVal,
       };
     case "edit":
+      // prevent empty input fields in editing modal
+      if (payload.newDesc === "" || payload.newAmount === 0) {
+        alert("Please fill in all fields");
+        return state;
+      }
       return {
         ...state,
         entries: state.entries.map((entry) => {
-          if (entry.id === state.idToEdit) {
-            return {
-              ...entry,
-              desc: payload.newDesc,
-              amount: payload.newAmount,
-            };
-          } else return entry;
+          if (entry.id !== state.idToEdit) return entry;
+
+          return {
+            ...entry,
+            desc: payload.newDesc,
+            amount: payload.newAmount,
+          };
         }),
         isEditing: false,
         idToEdit: null,
@@ -121,7 +126,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Budget Tracker App - React</h1>
+      <h1>Budget Tracker App - useReducer Hook Practice</h1>
       <Amounts
         availableFunds={availableFunds}
         incomeFunds={incomeFunds}

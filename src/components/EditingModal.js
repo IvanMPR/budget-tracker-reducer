@@ -38,7 +38,8 @@ export default function EditingModal({ descToEdit, amountToEdit, dispatch }) {
         <button
           type="submit"
           className="btn"
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             dispatch({ type: "edit", payload: { newDesc, newAmount } });
           }}
         >
