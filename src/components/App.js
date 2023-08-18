@@ -50,12 +50,14 @@ function reducer(state, { type, payload }) {
         amount: 0,
       };
     case "deleteEntry":
+      // prevent deleting entry while editing
       if (state.isEditing) return state;
       return {
         ...state,
         entries: state.entries.filter((entry) => entry.id !== payload),
       };
     case "openEditMode":
+      // prevent opening editing modal while already editing
       if (state.isEditing) return state;
       return {
         ...state,
